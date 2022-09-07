@@ -1,41 +1,58 @@
 import face_recognition
-import imutils
+import argparse
 import pickle
-import time
 import cv2
-import os
 
-cfp = os.path.dirname(cv2.__file__) + "/data/haarcascade_frontalface_alt2.xml"
 
-fc = cv2.CascadeClassifier(cfp)
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True, help="input image path")
+args=vars(ap.parse_args())
 
-data = pickle.loads(open('face_enc', "rb").read())
+print("[INFO] loading encodings...")
+data = pickle.loads(open('encoding', "rb").read())
 
-image = cv2.imread('../Camera-Pictures/BTL.jpg')
+image=cv2.imread(args["image"])
+
 rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-faces = fc.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(60, 60), flags=cv2.CASCADE_SCALE_IMAGE)
 
-encodings = face_recognition.face_encodings(rgb)
-names = []
+print("[INFO] recognizing faces...")
+boxes = face_recognition.face_locations(rgb, model="hog")
+
+encodings = face_recognition.face_encodings(rgb, boxes)
+
+names=[]
+# loop over the facial embeddings
 for encoding in encodings:
-    matches = face_recognition.compare_faces(data["encodings"], encoding)
-    name = "Unknown"
-    if True in matches:
-        matchedIdxs = [i for (i, b) in enumerate(matches) if b]
-        count = {}
-        for i in matchedIdxs:
-            name = data["names"][i]
-            count[name] = count.get(name, 0) + 1
-            name = max(count, key=count.get)
-            
-        names.append(name)
+	# attempt to match each face in the input image to our known
+	# encodings
+	matches = face_recognition.compare_faces(data["encodings"], encoding)
+	name = "Unknown"
 
-        for ((x, y, w, h), name) in zip(faces, names):
-            cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
-            cv2.putText(image, name, (x,y), cv2.FONT_HERSHEY_SIMPLEX,
-            0.75, (0,255,0), 2)
-            resize = cv2.resize(image, (960, 960))
+	if True in matches:
 
-    cv2.imshow("Frame", resize)
-    cv2.waitKey(0)
+		matchedIdxs = [i for (i, b) in enumerate(matches) if b]
+		counts={}
+
+		for i in matchedIdxs:
+			name= data["names"][i]
+			counts[name]= counts.get(name, 0) + 1
+
+
+		name = max(counts, key=counts.get)
+
+	names.append(name)
+
+
+
+# loop over the recognized faces
+for ((top, right, bottom, left), name) in zip(boxes, names):
+	# draw the predicted face name on the image
+	cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)
+	y = top - 15 if top - 15 > 15 else top + 15
+	cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
+		0.75, (0, 255, 0), 2)
+ 
+# show the output image
+resize = cv2.resize(image, (960, 960))
+cv2.imshow("Image", resize)
+cv2.waitKey(0)

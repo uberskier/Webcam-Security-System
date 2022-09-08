@@ -26,6 +26,7 @@ while True:
     if (timeTemp - timeTimer) > 10 and (timeTemp - timeTimer) < 12: 
         print("sms")
         time.sleep(3)
+        SavedPeople.clear()
 
     # loop over the facial embeddings incase
     for encoding in encodings:

@@ -24,7 +24,7 @@ timeTimer = time.perf_counter()
 timeTimer =- 12
 
 #set personal pushbullet access token here
-access_token = "o.qLejMJHExli6BBOpxhjcySj0rAQI9Kj4"
+access_token = ""
 pb = pushBullet(access_token)
 
 while True:

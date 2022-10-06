@@ -1,4 +1,5 @@
 from PushBulletNotification import pushBullet
+from IFTTTCommands import ifttt
 import face_recognition
 import imutils
 import pickle
@@ -26,7 +27,18 @@ timeTimer =- 12
 #set personal pushbullet access token here
 file = open("../Camera-Pictures/APIkey.txt", "r")
 access_token = file.readline()
+access_token = access_token.replace("\n", "")
 pb = pushBullet(access_token)
+
+#get ifttt action names and api key
+fileL = file.readlines()
+file.close()
+
+lines = []
+for x in fileL:
+    lines.append(x.replace("\n", ""))
+ift = ifttt(lines)
+
 
 while True:
     # grab the frame from the threaded video stream
@@ -39,7 +51,8 @@ while True:
     timeTemp = time.perf_counter()
     if (timeTemp - timeTimer) > 10 and (timeTemp - timeTimer) < 12: 
         pb.text(SavedPeople)
-        time.sleep(3)
+        time.sleep(1)
+        ift.commands(SavedPeople)
         SavedPeople.clear()
         numPeople = 1
         print("[INFO] Notification sent")

@@ -9,10 +9,10 @@ import os
 #import PushBulletNotification
 
  
-print("[INFO] loading encodings...")
+print("[INFO] Loading encodings...")
 data = pickle.loads(open('encoding', "rb").read())
  
-print("Streaming started")
+print("[INFO] Streaming started")
 video_capture = cv2.VideoCapture(0)
 
 # loop over frames from the video file stream
@@ -24,7 +24,8 @@ timeTimer = time.perf_counter()
 timeTimer =- 12
 
 #set personal pushbullet access token here
-access_token = ""
+file = open("../Camera-Pictures/APIkey.txt", "r")
+access_token = file.readline()
 pb = pushBullet(access_token)
 
 while True:
@@ -41,6 +42,7 @@ while True:
         time.sleep(3)
         SavedPeople.clear()
         numPeople = 1
+        print("[INFO] Notification sent")
 
     # loop over the facial embeddings incase
     for encoding in encodings:

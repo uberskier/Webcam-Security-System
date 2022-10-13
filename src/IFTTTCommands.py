@@ -18,6 +18,7 @@ class ifttt():
                 #set name for dict of person
                 if newPerson == True:
                     person = command
+                    self.peopleCommands[person] = {"test" : "test"}
                     newPerson = False
                 #find new person command line
                 elif command == "New Person":
@@ -25,7 +26,10 @@ class ifttt():
                 #set commands for selected person
                 else: 
                     key = command.split(':')
-                    self.peopleCommands[person] = {key[0] : key[1]}
+                    list = []
+                    for l in range(1, len(key)):
+                        list.append(key[l])
+                    self.peopleCommands[person][key[0]] = list
             
             print("[INFO] Commands loaded for:")
             for x in self.peopleCommands:
@@ -43,33 +47,36 @@ class ifttt():
 
             for key in people:
                 for key2 in people[key]:
-                    print(key2)
-                    if key2 in self.peopleCommands == True:
-                        print(2)
+                    #check that person in list has commands 
+                    if key2 in self.peopleCommands.keys():
                         self.run(key2, numPeop)
 
         return
 
+    #run commands for person
     def run(self, person, numPeop):
+        #get persons conditions for commands 
         for key in self.peopleCommands[person]:
-            print(key)
+            #if statments based on conditions used
             if key == "Always":
                 self.call((self.peopleCommands[person][key]))
+            if key == "People":
+                if numPeop > 1:
+                    self.call((self.peopleCommands[person][key]))
         return
 
 
-
-    def call(self, command):
+    #sending webhooks for each command
+    def call(self, commands):
         #building webhook address for command
-        address = 'https://maker.ifttt.com/trigger/'
-        address += command
-        address += '/with/key/'
-        address += self.api
-        #posting webhook address
-        requests.post(address)
+        for command in commands:
+            url = 'https://maker.ifttt.com/trigger/{event_name}/with/key/{key}'
+            url = url.format(event_name = command, key=self.api)
+            #posting webhook address
+            response = requests.post(url)
 
-        #command line print saying it was processed
-        info = "[INFO] Processed IFTTT command - "
-        info += command
-        print(info)
+            #command line print saying it was processed
+            info = "[INFO] Processed IFTTT command - "
+            info += command
+            print(info)
         return

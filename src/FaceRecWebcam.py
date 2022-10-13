@@ -1,4 +1,5 @@
 from PushBulletNotification import pushBullet
+from IFTTTCommands import ifttt
 import face_recognition
 import imutils
 import pickle
@@ -17,7 +18,7 @@ video_capture = cv2.VideoCapture(0)
 
 # loop over frames from the video file stream
 SavedPeople = {}
-numPeople = 1
+numPeople = 0
 path = "../Camera-Pictures"
 
 timeTimer = time.perf_counter()
@@ -26,7 +27,18 @@ timeTimer =- 12
 #set personal pushbullet access token here
 file = open("../Camera-Pictures/APIkey.txt", "r")
 access_token = file.readline()
+access_token = access_token.replace("\n", "")
 pb = pushBullet(access_token)
+
+#get ifttt action names and api key
+fileL = file.readlines()
+file.close()
+
+lines = []
+for x in fileL:
+    lines.append(x.replace("\n", ""))
+ift = ifttt(lines)
+
 
 while True:
     # grab the frame from the threaded video stream
@@ -37,11 +49,16 @@ while True:
     names = []
     
     timeTemp = time.perf_counter()
+    #lets the system know if a person has been seen in the last 10 seconds 
     if (timeTemp - timeTimer) > 10 and (timeTemp - timeTimer) < 12: 
+        #send notification of people seen 
         pb.text(SavedPeople)
-        time.sleep(3)
+        time.sleep(1)
+        #process smart product commands 
+        ift.commands(SavedPeople)
+        #reset list of people seen
         SavedPeople.clear()
-        numPeople = 1
+        numPeople = 0
         print("[INFO] Notification sent")
 
     # loop over the facial embeddings incase
@@ -64,7 +81,6 @@ while True:
             name = max(counts, key=counts.get)
  
         names.append(name)
-        
         # loop over the recognized faces
     for ((top, right, bottom, left), name) in zip(boxes, names):
         # rescale the face coordinates
@@ -76,15 +92,17 @@ while True:
 
         # add person to texting list if they havent been seen before in the last 10 seconds
         now = datetime.datetime.now()
-        if len(SavedPeople) == 0:
+        if numPeople == 0:
+            numPeople += 1
             framePath = os.path.join(path, (name + ".jpg"))
             cv2.imwrite(framePath, frame)
-            SavedPeople[numPeople] = {name : framePath, "date" : now}
-        elif name in SavedPeople == False:
+            SavedPeople[name] = {name : framePath, "date" : now}
+        #Add people to list of people seen if they havent been seen before
+        if ((name in SavedPeople) == False):
+            numPeople += 1
             framePath = os.path.join(path, (name + ".jpg"))
             cv2.imwrite(framePath, frame)
-            SavedPeople[numPeople] = {name : framePath, "date" : now}
-        numPeople += 1
+            SavedPeople[name] = {name : framePath, "date" : now}
 
     cv2.imshow("Frame", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

@@ -1,5 +1,7 @@
 from PushBulletNotification import pushBullet
 from IFTTTCommands import ifttt
+import string
+import random
 import face_recognition
 import imutils
 import pickle
@@ -7,7 +9,11 @@ import time
 import cv2
 import datetime
 import os
-#import PushBulletNotification
+
+def randomString():
+    character = string.ascii_letters + string.digits
+    saveName = "".join(random.choice(character) for x in range(10))
+    return saveName
 
  
 print("[INFO] Loading encodings...")
@@ -43,6 +49,7 @@ ift = ifttt(lines)
 while True:
     # grab the frame from the threaded video stream
     ret, frame = video_capture.read()
+    frameSave = frame.copy()
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     boxes = face_recognition.face_locations(rgb, model="hog")
     encodings = face_recognition.face_encodings(rgb, boxes)
@@ -97,12 +104,25 @@ while True:
             framePath = os.path.join(path, (name + ".jpg"))
             cv2.imwrite(framePath, frame)
             SavedPeople[name] = {name : framePath, "date" : now}
+
+            #Save a photo of anyone unknown to be added to a person profile later
+            if name == "Unknown":
+                url = randomString()
+                UnknownPath = os.path.join("../Camera-Pictures/Unknown_People_Seen", (url + ".jpg"))
+                cv2.imwrite(UnknownPath, frameSave)
+
         #Add people to list of people seen if they havent been seen before
         if ((name in SavedPeople) == False):
             numPeople += 1
             framePath = os.path.join(path, (name + ".jpg"))
             cv2.imwrite(framePath, frame)
             SavedPeople[name] = {name : framePath, "date" : now}
+
+            #Save a photo of anyone unknown to be added to a person profile later
+            if name == "Unknown":
+                url = randomString()
+                UnknownPath = os.path.join("../Camera-Pictures/Unknown_People_Seen", (url + ".jpg"))
+                cv2.imwrite(UnknownPath, frameSave)
 
     cv2.imshow("Frame", frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):

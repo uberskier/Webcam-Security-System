@@ -14,7 +14,7 @@ class pushBullet():
                 if keys == "date":
                     time = dict[key][keys].strftime("%m-%d-%y %I:%M:%S%p")
                     text = (text + time)
-                else:
+                elif keys != "newPerson":
                     text = (keys + " seen at ")
                     self.frame = dict[key][keys]
                     self.name = keys

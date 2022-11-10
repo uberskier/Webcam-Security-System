@@ -181,6 +181,7 @@ To let the system send notifications and control smart products you will have to
 
 <br />
 <br />
+
 The whole APIkey.txt file should look something like this:
 ```sh
 o.HihH9n7nspn2snuUn9no0snf

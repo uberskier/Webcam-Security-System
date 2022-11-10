@@ -91,9 +91,89 @@ Below is the install requirements for running the System.
 
 1. Open the Command Prompt or terminal
 
-2. Install Open CV
+2. Install openCV
    ```sh
    pip install opencv-python
    ```
+
+3. Install face_recognition
+   ```sh
+   pip install face_recognition
+   ```
+
+4. Install dlib 
+   For Windows follow the instructions here: 
+   https://www.geeksforgeeks.org/how-to-install-dlib-library-for-python-in-windows-10/
+   
+   For Raspberry Pi follow the instructions here:
+   https://pyimagesearch.com/2017/05/01/install-dlib-raspberry-pi/
+
+5. Install PushBullet
+   ```sh
+   pip install pushbullet.py==0.9.1
+   ```
+
+6. Install Requests
+   ```sh
+   pip install requests
+   ```
+
+7. Clone the Security System
+   ```sh
+   git clone https://github.com/uberskier/Webcam-Security-System.git
+   ```
+
+
+
+### Facial Recognition Setup
+
+
+
+### PushBullet and IFTTT Setup
+
+To let the system send notifications and control smart products you will have to create accounts for Pushbullet and IFTTT.
+
+#### API keys
+1. In the Camera-Pictures folder add a file named
+   ```sh
+   APIkey.txt
+   ```
+
+#### PushBullet 
+
+1. Follow these steps till you get the API key and copy it:
+   https://www.geeksforgeeks.org/python-web-app-to-send-push-notification-to-your-phone/
+
+2. In the APIkey file put the pushbullet key on the first line
+
+
+#### IFTTT
+
+1. Follow these stes till you get an API key and copy it:
+   https://pimylifeup.com/using-ifttt-with-the-raspberry-pi/
+
+2. In the APIkey file put the IFTTT key on the second line
+
+3. Next line in the file put the following:
+   ```sh
+   New Person
+   ```
+4. On the next line put the name of the person the command belongs to spelled and capitilized just like how it is in the persons photo folder.
+
+5. On the following lines put Always or People followed by any IFTTT commands broken up with colens. Always for always activated when the person is seen or People if it is activate only when the person is seen with another person. 
+   ```sh
+   Always:Baylor_Seen_Coming_In:Baylor_Set_Brightness_BedRoom
+   People:Baylor_Seen_Several_People_Liv:Baylor_Seen_Several_People_Kit
+   ```
+
+The whole APIkey.txt file should look something like this:
+```sh
+o.HihH9n7ns&n2snuUn9n*0snf
+sn8JFP9N7snB97Knw0nGSM
+New Person
+Baylor
+Always:Baylor_Seen_Coming_In:Baylor_Set_Brightness_BedRoom
+People:Baylor_Seen_Several_People_Liv:Baylor_Seen_Several_People_Kit
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

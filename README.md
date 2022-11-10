@@ -10,7 +10,7 @@
   <p align="center">
     WSS is an affordable home security camera with facial recognition, phone alerts, and smart home controls. 
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/uberskier/Webcam-Security-System"><strong>Explore the System »</strong></a>
     <br />
     <br />
   </p>
@@ -69,8 +69,7 @@ Here is how to get your Webcam Security System up in running!
 
 Before setting up WSS you need to have a few things prepared!
 
-#### Hardware
-<br />
+#### Hardware:
 
 ##### Recommended 
 * Raspberry Pi 4
@@ -78,24 +77,23 @@ Before setting up WSS you need to have a few things prepared!
 ##### Other Options 
 * Old laptop that can be dedicated to Security
 
+<br />
+
+#### Expected Software:
+* Python 3
+* Pip
+
 
 
 ### Installation
 
-Below is the install requirements for running the 
+Below is the install requirements for running the System.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Open the Command Prompt or terminal
+
+2. Install Open CV
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+   pip install opencv-python
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

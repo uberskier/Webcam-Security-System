@@ -183,7 +183,7 @@ To let the system send notifications and control smart products you will have to
 <br />
 The whole APIkey.txt file should look something like this:
 ```sh
-o.HihH9n7ns&n2snuUn9n*0snf
+o.HihH9n7nspn2snuUn9no0snf
 sn8JFP9N7snB97Knw0nGSM
 New Person
 Baylor

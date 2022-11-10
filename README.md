@@ -195,3 +195,21 @@ People:Baylor_Seen_Several_People_Liv:Baylor_Seen_Several_People_Kit
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Once the setup is complete your Webcam Security System is ready to go!
+
+Set your system up with the webcam pointing at your main door 
+
+Once it is ready type the following and let the System do its thing!
+```sh
+Python FaceRecWebcam.py
+```
+If you ever need to turn off the camera press q and the system will shut down. 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

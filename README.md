@@ -127,6 +127,17 @@ Below is the install requirements for running the System.
 
 ### Facial Recognition Setup
 
+1. locate the People-Folders folder
+
+2. Add a folder inside People-Folders named after the first name of the person you want to add
+
+3. Add 20+ photos of said person with only their face present in each photo. The more photos you add the more accurate the system will be.
+
+4. Once you have added all the people you want to run the following:
+   ```sh
+   python FaceEncoding.py
+   ```
+5. If you ever add more photos or more people re-run the FaceEncoding file.
 
 
 ### PushBullet and IFTTT Setup
@@ -166,6 +177,10 @@ To let the system send notifications and control smart products you will have to
    People:Baylor_Seen_Several_People_Liv:Baylor_Seen_Several_People_Kit
    ```
 
+6. Repeat steps 3-5 for commands for other people
+
+<br />
+<br />
 The whole APIkey.txt file should look something like this:
 ```sh
 o.HihH9n7ns&n2snuUn9n*0snf

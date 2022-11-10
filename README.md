@@ -32,6 +32,8 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#facial-recognition-setup">Facial Recognition Setup</a></li>
+        <li><a href="#pushbullet-and-ifttt-setup">PushBullet and IFTTT Setup</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>

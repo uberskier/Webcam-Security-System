@@ -1,4 +1,3 @@
-# Webcam-Security-System
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">

@@ -58,3 +58,44 @@ Here's why:
 * Python 3
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+Here is how to get your Webcam Security System up in running!
+
+### Prerequisites
+
+Before setting up WSS you need to have a few things prepared!
+
+#### Hardware
+<br />
+
+##### Recommended 
+* Raspberry Pi 4
+* External Webcam 720p or better
+##### Other Options 
+* Old laptop that can be dedicated to Security
+
+
+
+### Installation
+
+Below is the install requirements for running the 
+
+1. Get a free API Key at [https://example.com](https://example.com)
+2. Clone the repo
+   ```sh
+   git clone https://github.com/your_username_/Project-Name.git
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Enter your API in `config.js`
+   ```js
+   const API_KEY = 'ENTER YOUR API';
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
